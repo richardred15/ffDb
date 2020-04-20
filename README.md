@@ -45,8 +45,8 @@ database.updateRows(
     }
 )
 
-    database.selectTable("users")/* Switch to table */;
-    let user_data = database.searchColumn("username", "richardred15");
+database.selectTable("users")/* Switch to table */;
+let user_data = database.searchColumn("username", "richardred15");
 ```
 user_data:
 ```
