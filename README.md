@@ -17,10 +17,10 @@ if (!database.initialized) {
 ## Simple Usage
 
 ```javascript
-    database.createTable("users", ["username", "password", "email"]);
+    database.createTable("users", ["username", "password", "email"])/* Create Table selects the created table for modification */;
     database.insertRow("richardred15", "testing", "richardred15@gmail.com");
-    database.inserRow("eric", "testing") /* <--- All row values are not required */
-    database.insertRow() /* <-- Insert an empty row */
+    database.inserRow("eric", "testing") /* All row values are not required */
+    database.insertRow() /* Insert an empty row */
 
 
 
@@ -34,4 +34,17 @@ if (!database.initialized) {
             username: "richardred15"
         }
     )
+
+    database.selectTable("users")/* Switch to table */;
+    let user_data = database.searchColumn("username", "richardred15");
+```
+user_data:
+```
+[
+  {
+    username: 'richardred15',
+    password: 'testing2',
+    email: 'richardred15@gmail.com'
+  }
+]
 ```

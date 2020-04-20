@@ -21,7 +21,7 @@ if (!database.initialized) {
     database.initialize();
     database.createTable("test", [Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString()]);
     database.createTable("users", ["username", "password", "email"]);
-    database.insertRow("richardred15", "testing");
+    database.insertRow("richardred15", "testing", "richardred15@gmail.com");
     database.insertRow("eric", "bill");
     database.updateRows({
         password: "testing2"
