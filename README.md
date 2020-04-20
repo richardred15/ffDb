@@ -4,6 +4,7 @@
 
 ffDb makes several assumptions about typical use cases for small size, low maintenance, easy to setup databases.
 
+All data stored is encrypted, either with a provided password or one will be generated automatically.
 
 ## Simple Initialization
 
