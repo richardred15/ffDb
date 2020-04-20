@@ -22,8 +22,6 @@ class Tables {
     }
 
     exists(name) {
-        /*         console.log(this.tables, name);
-         */
         return this.tables.includes(name);
     }
 
@@ -32,7 +30,8 @@ class Tables {
     }
 
     loadTable(name) {
-        this.table_data[name] = new Table(this.directory, this.configuration_directory, name);
+        if (!this.tableLoaded(name))
+            this.table_data[name] = new Table(this.directory, this.configuration_directory, name);
     }
 
     getColumns(name) {
@@ -87,8 +86,6 @@ class Tables {
         let table = new Table(this.directory, this.configuration_directory, name);
         this.table_data[name] = table;
         this.tables.push(name);
-        /*         console.log(this.tables);
-         */
         this.write();
     }
 }
@@ -101,6 +98,7 @@ class Table {
         this.columns = [];
         this.rows = 0;
         this.cache = {};
+        this.write_timeout = undefined;
         this.load();
     }
 
@@ -115,8 +113,6 @@ class Table {
             column = column.toString();
             this.cache[column] = JSON.parse(fs.readFileSync(this.directory + "/" + column + ".json"));
         }
-        /*         console.log(this.cache);
-         */
         this.rows = this.configuration_data.rows;
     }
 
@@ -131,15 +127,12 @@ class Table {
                 newData.push("");
             }
         }
-        /*         console.log(newData);
-         */
         for (let i = 0; i < this.columns.length; i++) {
             let c = this.columns[i];
             this.cache[c].push(newData[i]);
         }
         this.rows++;
         this.write();
-        //return newData;
     }
 
     updateRows(newData, where) {
@@ -158,6 +151,12 @@ class Table {
     }
 
     write() {
+        clearTimeout(this.write_timeout);
+        let instance = this;
+        this.write_timeout = setTimeout(() => instance.actuallyWrite(), 0);
+    }
+
+    actuallyWrite() {
         let configuration_data = {
             columns: this.columns,
             rows: this.rows
@@ -172,12 +171,19 @@ class Table {
         fs.writeFileSync(this.directory + "/" + name + ".json", JSON.stringify(this.cache[name]));
     }
 
-    searchColumn(column, term) {
+    searchColumn(column, term, limit = Infinity) {
         if (!this.hasColumn(column)) throw new Errors.NoSuchColumnError();
+        if (limit == Infinity) limit = this.rows;
+        if (limit == 0) return [];
+
         let data = this.cache[column];
         let results = [];
         for (let i = 0; i < data.length; i++) {
-            if (data[i] == term) results.push(i);
+            if (data[i] == term) {
+                results.push(i);
+                limit--;
+                if (limit < 0) break;
+            }
         }
         let rows = [];
         for (let r of results) {
@@ -186,9 +192,10 @@ class Table {
         return rows;
     }
 
-    getRows() {
+    getRows(limit = Infinity) {
+        if (limit == Infinity) limit = this.rows;
         let r = [];
-        for (let i = 0; i < this.rows; i++) {
+        for (let i = 0; i < limit; i++) {
             let d = [];
             for (let name in this.cache) {
                 d.unshift(this.cache[name][i]);
