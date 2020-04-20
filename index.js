@@ -27,7 +27,10 @@ if (!database.initialized) {
         password: "testing2"
     }, {
         username: "richardred15"
-    })
+    });
+    database.updateRows({
+        email: 'testing123@gmail.com'
+    });
 }
 console.log(database.table_manager.tables);
 database.selectTable("users");

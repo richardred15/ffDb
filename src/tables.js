@@ -136,14 +136,22 @@ class Table {
     }
 
     updateRows(newData, where) {
-        for (let column in where) {
-            if (!this.hasColumn(column)) continue;
-            let term = where[column];
-            for (let i = this.rows - 1; i >= 0; i--) {
-                if (this.cache[column][i] == term) {
-                    for (let col in newData) {
-                        this.cache[col][i] = newData[col];
+        if (where != undefined) {
+            for (let column in where) {
+                if (!this.hasColumn(column)) continue;
+                let term = where[column];
+                for (let i = this.rows - 1; i >= 0; i--) {
+                    if (this.cache[column][i] == term) {
+                        for (let col in newData) {
+                            this.cache[col][i] = newData[col];
+                        }
                     }
+                }
+            }
+        } else {
+            for (let i = this.rows - 1; i >= 0; i--) {
+                for (let col in newData) {
+                    this.cache[col][i] = newData[col];
                 }
             }
         }
