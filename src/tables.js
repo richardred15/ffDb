@@ -1,7 +1,7 @@
 let fs = require('fs');
 const Errors = require("./error");
 
-class Tables {
+class TableManager {
     constructor(directory, configuration_directory) {
         this.configuration_directory = configuration_directory;
         this.directory = directory;
@@ -214,4 +214,4 @@ class Table {
     }
 }
 
-module.exports = Tables;
+module.exports = TableManager;

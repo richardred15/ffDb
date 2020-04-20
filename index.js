@@ -29,7 +29,7 @@ if (!database.initialized) {
         username: "richardred15"
     })
 }
-console.log(database.tables.tables);
+console.log(database.table_manager.tables);
 database.selectTable("users");
 let user_data = database.searchColumn("username", "richardred15");
 console.log(user_data);

@@ -1,5 +1,5 @@
 let fs = require('fs');
-let Tables = require("./tables");
+let TableManager = require("./tables");
 const Errors = require("./error");
 
 
@@ -29,10 +29,10 @@ class Database {
     constructor(directory) {
         this.directory = directory;
         this.configuration_directory = this.directory + "/.conf";
-        this.table_config_directory = this.directory + "/.conf/tables";
+        this.table_configuration_directory = this.directory + "/.conf/tables";
         this.table_directory = this.directory + "/tables";
-        this.current_table = null;
-        this.tables = null;
+        this.current_table_name = null;
+        this.table_manager = null;
         this.configuration = null;
         this.initialized = false;
         if (fs.existsSync(this.directory)) {
@@ -42,7 +42,7 @@ class Database {
 
     load() {
         this.configuration = new Configuration(this.configuration_directory);
-        this.tables = new Tables(this.table_directory, this.table_config_directory);
+        this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);
         this.initialized = true;
     }
 
@@ -50,10 +50,10 @@ class Database {
         if (!this.initialized) {
             fs.mkdirSync(this.directory);
             fs.mkdirSync(this.configuration_directory);
-            fs.mkdirSync(this.table_config_directory);
+            fs.mkdirSync(this.table_configuration_directory);
             fs.mkdirSync(this.table_directory);
             fs.writeFileSync(this.configuration_directory + "/conf.json", "{}");
-            fs.writeFileSync(this.table_config_directory + "/tables.json", "[]");
+            fs.writeFileSync(this.table_configuration_directory + "/tables.json", "[]");
             this.initialized = true;
             this.load();
         } else {
@@ -62,31 +62,31 @@ class Database {
     }
 
     selectTable(name) {
-        if (this.tables.exists(name)) {
-            this.current_table = name;
-            this.tables.loadTable(name);
+        if (this.table_manager.exists(name)) {
+            this.current_table_name = name;
+            this.table_manager.loadTable(name);
         } else
             throw new Errors.NoSuchTableError();
     }
 
     searchColumn(name, term) {
-        return this.tables.searchColumn(this.current_table, name, term);
+        return this.table_manager.searchColumn(this.current_table_name, name, term);
     }
 
     insertRow() {
-        this.tables.insertRow(this.current_table, arguments);
+        this.table_manager.insertRow(this.current_table_name, arguments);
     }
 
     updateRows(newData, where) {
-        this.tables.updateRows(this.current_table, newData, where);
+        this.table_manager.updateRows(this.current_table_name, newData, where);
     }
 
     tableColumns() {
-        return this.tables.getColumns(this.current_table);
+        return this.table_manager.getColumns(this.current_table_name);
     }
 
-    getRows(name = this.current_table) {
-        return this.tables.getRows(name);
+    getRows(name = this.current_table_name) {
+        return this.table_manager.getRows(name);
     }
 
     get() {
@@ -108,8 +108,8 @@ class Database {
             throw new Errors.DatabaseNotInitializedError();
         }
 
-        this.tables.createTable(name, columns);
-        this.current_table = name;
+        this.table_manager.createTable(name, columns);
+        this.current_table_name = name;
     }
 }
 
