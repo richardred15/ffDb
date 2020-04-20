@@ -25,11 +25,13 @@ if (!database.initialized) {
 
 
     database.updateRows(
+        /* New Values */
         {
         password: "testing2"
-        }/* New Values */,
+        },
+        /* Where column matches */
         {
             username: "richardred15"
-        }/* Where column matches */
+        }
     )
 ```
