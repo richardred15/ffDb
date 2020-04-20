@@ -1,4 +1,4 @@
-let Database = require("./database");
+let Database = require("./DataBase/database");
 
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', function (data) {
