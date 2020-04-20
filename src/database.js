@@ -61,6 +61,7 @@ class Database {
             fs.writeFileSync(this.table_configuration_directory + "/tables.json", "[]");
             this.initialized = true;
             this.load();
+            console.log("Database Initialized!");
         } else {
             throw new Errors.DatabaseAlreadyInitializedError();
         }
@@ -136,6 +137,11 @@ class Database {
 
     }
 
+    static init(name, password = 0) {
+        let db = new Database(name, password);
+        if (!db.initialized) db.initialize();
+    }
+
     /**
      * 
      * @param {string} name 
@@ -151,5 +157,6 @@ class Database {
         this.current_table_name = name;
     }
 }
+
 
 module.exports = Database;

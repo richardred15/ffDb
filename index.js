@@ -11,10 +11,10 @@ process.stdin.on('data', function (data) {
         process.exit();
     }
 });
-
+/* 
 fs.rmdirSync("db", {
     recursive: true
-});
+}); */
 
 let database = new Database("db");
 if (!database.initialized) {
