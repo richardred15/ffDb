@@ -17,10 +17,10 @@ if (!database.initialized) {
 ## Simple Usage
 
 ```javascript
-database.createTable("users", ["username", "password", "email"])/* Create Table selects the created table for modification */;
+database.createTable("users", ["username", "password", "email"]); /* Create Table selects the created table for modification */
 database.insertRow("richardred15", "testing", "richardred15@gmail.com");
-database.inserRow("eric", "testing") /* All row values are not required */
-database.insertRow() /* Insert an empty row */
+database.inserRow("eric", "testing"); /* All row values are not required */
+database.insertRow(); /* Insert an empty row */
 
 
 
