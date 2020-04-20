@@ -6,6 +6,9 @@ class Tables {
         this.configuration_directory = configuration_directory;
         this.directory = directory;
         this.tables = [];
+        /**
+         * @type {Table[]}
+         */
         this.table_data = {};
         this.load();
     }
@@ -43,6 +46,11 @@ class Tables {
         if (this.exists(name))
             this.table_data[name].insert(data);
         else throw new Errors.NoSuchTableError();
+    }
+
+    updateRows(table, newData, where) {
+        if (!this.exists(table)) throw new Errors.NoSuchTableError();
+        this.table_data[table].updateRows(newData, where);
     }
 
     getRows(name) {
@@ -132,6 +140,21 @@ class Table {
         this.rows++;
         this.write();
         //return newData;
+    }
+
+    updateRows(newData, where) {
+        for (let column in where) {
+            if (!this.hasColumn(column)) continue;
+            let term = where[column];
+            for (let i = this.rows - 1; i >= 0; i--) {
+                if (this.cache[column][i] == term) {
+                    for (let col in newData) {
+                        this.cache[col][i] = newData[col];
+                    }
+                }
+            }
+        }
+        this.write();
     }
 
     write() {

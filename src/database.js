@@ -77,6 +77,10 @@ class Database {
         this.tables.insertRow(this.current_table, arguments);
     }
 
+    updateRows(newData, where) {
+        this.tables.updateRows(this.current_table, newData, where);
+    }
+
     tableColumns() {
         return this.tables.getColumns(this.current_table);
     }
