@@ -12,9 +12,9 @@ process.stdin.on('data', function (data) {
     }
 });
 
-/* fs.rmdirSync("db", {
+fs.rmdirSync("db", {
     recursive: true
-}); */
+});
 
 let database = new Database("db");
 if (!database.initialized) {

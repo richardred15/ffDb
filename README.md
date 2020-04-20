@@ -9,7 +9,7 @@ ffDb makes several assumptions about typical use cases for small size, low maint
 
 ```javascript
 let Database = require("./src/database");
-let database = new Database("db"/* Directory for database */);
+let database = new Database("database_directory", password?);
 if (!database.initialized) {
     database.initialize() /* Generate folder and file structure in indicated directory */;
 }
