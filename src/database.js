@@ -26,6 +26,8 @@ class Database {
     load() {
         if (this.key != 0) {
             Configuration.key = this.key;
+        } else {
+            Configuration.store_key = true;
         }
         this.configuration = new Configuration(this.configuration_directory);
         this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);

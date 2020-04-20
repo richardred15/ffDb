@@ -16,7 +16,7 @@ process.stdin.on('data', function (data) {
     recursive: true
 }); */
 
-let database = new Database("db", "password");
+let database = new Database("db");
 if (!database.initialized) {
     database.initialize();
     database.createTable("test", ["west", Math.random().toString()]);
