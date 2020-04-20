@@ -198,7 +198,7 @@ class Table {
         for (let i = 0; i < limit; i++) {
             let d = [];
             for (let name in this.cache) {
-                d.unshift(this.cache[name][i]);
+                d.push(this.cache[name][i]);
             }
             r.push(d);
         }
