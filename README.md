@@ -8,9 +8,9 @@ ffDb makes several assumptions about typical use cases for small size, low maint
 ## Simple Initialization
 
 ```javascript
-let database = new Database("db"/* <-- Directory for database */);
+let database = new Database("db"/* Directory for database */);
 if (!database.initialized) {
-    database.initialize();
+    database.initialize() /* Generate folder and file structure in indicated directory */;
 }
 ```
 
