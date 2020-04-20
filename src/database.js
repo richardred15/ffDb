@@ -1,32 +1,15 @@
 let fs = require('fs');
+const crypto = require('crypto');
 let TableManager = require("./tables");
 const Errors = require("./error");
-
-
-class Configuration {
-    constructor(directory) {
-        this.directory = directory;
-
-        if (!fs.existsSync(this.directory + "/conf.json")) {
-            throw new Errors.DatabaseNotInitializedError();
-        }
-
-        this.write();
-    }
-
-    load() {
-
-    }
-
-    write() {
-        fs.writeFileSync(this.directory + "/conf.json", JSON.stringify(this));
-    }
-}
-
-
+let Configuration = require("./configuration");
 
 class Database {
-    constructor(directory) {
+    constructor(directory, password = 0) {
+        this.key = password;
+        if (this.key != 0) {
+            this.key = crypto.createHash('sha256').update(String(this.key)).digest('base64').substr(0, 32);
+        }
         this.directory = directory;
         this.configuration_directory = this.directory + "/.conf";
         this.table_configuration_directory = this.directory + "/.conf/tables";
@@ -41,6 +24,9 @@ class Database {
     }
 
     load() {
+        if (this.key != 0) {
+            Configuration.key = this.key;
+        }
         this.configuration = new Configuration(this.configuration_directory);
         this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);
         this.initialized = true;
@@ -52,6 +38,11 @@ class Database {
             fs.mkdirSync(this.configuration_directory);
             fs.mkdirSync(this.table_configuration_directory);
             fs.mkdirSync(this.table_directory);
+            if (this.key == 0) {
+                Configuration.store_key = true;
+                this.key = String(Math.random());
+                this.key = crypto.createHash('sha256').update(String(this.key)).digest('base64').substr(0, 32);
+            }
             fs.writeFileSync(this.configuration_directory + "/conf.json", "{}");
             fs.writeFileSync(this.table_configuration_directory + "/tables.json", "[]");
             this.initialized = true;

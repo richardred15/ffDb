@@ -12,14 +12,14 @@ process.stdin.on('data', function (data) {
     }
 });
 
-fs.rmdirSync("db", {
+/* fs.rmdirSync("db", {
     recursive: true
-});
+}); */
 
-let database = new Database("db");
+let database = new Database("db", "password");
 if (!database.initialized) {
     database.initialize();
-    database.createTable("test", ["west", Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString()]);
+    database.createTable("test", ["west", Math.random().toString()]);
     database.insertRow("random", "random", "", "random");
     database.createTable("users", ["username", "password", "email"]);
     database.insertRow("richardred15", "testing", "richardred15@gmail.com");
@@ -33,16 +33,16 @@ if (!database.initialized) {
         email: 'testing123@gmail.com'
     });
 }
-console.log(database.table_manager.tables);
+console.log("Tables: " + database.table_manager.tables);
 database.selectTable("users");
 let user_data = database.searchColumn("username", "richardred15");
-console.log(user_data);
-console.log(database.getRows());
+console.log("User Data: ", user_data);
+console.log("Rows: " + database.getRows());
 
 database.selectTable("test");
 let start = Date.now();
 for (let i = 0; i < 5000; i++) {
-    database.insertRow(Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
+    database.insertRow(Math.random(), Math.random());
 }
 
 console.log(database.searchColumn("west", "random"));

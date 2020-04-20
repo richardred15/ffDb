@@ -1,5 +1,6 @@
 let fs = require('fs');
 const Errors = require("./error");
+let Encryption = require("./encryption");
 
 class TableManager {
     constructor(directory, configuration_directory) {
@@ -79,9 +80,9 @@ class TableManager {
         fs.mkdirSync(this.configuration_directory + "/" + name)
         fs.mkdirSync(this.directory + "/" + name);
         for (let column of columns) {
-            fs.writeFileSync(this.directory + "/" + name + "/" + column + ".json", "[]");
+            fs.writeFileSync(this.directory + "/" + name + "/" + column + ".json", Encryption.encrypt("[]"));
         }
-        fs.writeFileSync(this.configuration_directory + "/" + name + "/conf.json", JSON.stringify(configuration_data));
+        fs.writeFileSync(this.configuration_directory + "/" + name + "/conf.json", Encryption.encrypt(JSON.stringify(configuration_data)));
 
         let table = new Table(this.directory, this.configuration_directory, name);
         this.table_data[name] = table;
@@ -107,11 +108,16 @@ class Table {
     }
 
     load() {
-        this.configuration_data = JSON.parse(fs.readFileSync(this.configuration_directory + "/conf.json"));
+        let data = fs.readFileSync(this.configuration_directory + "/conf.json");
+        data = Encryption.decrypt(data);
+
+        this.configuration_data = JSON.parse(data);
         this.columns = this.configuration_data.columns;
         for (let column of this.columns) {
             column = column.toString();
-            this.cache[column] = JSON.parse(fs.readFileSync(this.directory + "/" + column + ".json"));
+            data = fs.readFileSync(this.directory + "/" + column + ".json");
+            data = Encryption.decrypt(data);
+            this.cache[column] = JSON.parse(data);
         }
         this.rows = this.configuration_data.rows;
     }
@@ -172,11 +178,15 @@ class Table {
         for (let column of this.columns) {
             this.writeColumn(column);
         }
-        fs.writeFileSync(this.configuration_directory + "/conf.json", JSON.stringify(configuration_data));
+        let data = JSON.stringify(configuration_data);
+        data = Encryption.encrypt(data);
+        fs.writeFileSync(this.configuration_directory + "/conf.json", data);
     }
 
     writeColumn(name) {
-        fs.writeFileSync(this.directory + "/" + name + ".json", JSON.stringify(this.cache[name]));
+        let data = JSON.stringify(this.cache[name]);
+        data = Encryption.encrypt(data);
+        fs.writeFileSync(this.directory + "/" + name + ".json", data);
     }
 
     searchColumn(column, term, limit = Infinity) {
