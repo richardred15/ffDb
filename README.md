@@ -19,9 +19,9 @@ if (!database.initialized) {
 ### Command line initialization
 
 ```
->node
->require("./src/database").init(name, password?);
->.exit
+> node
+> require("./src/database").init(name, password?);
+> .exit
 ```
 
 ## Simple Usage
