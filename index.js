@@ -19,7 +19,8 @@ fs.rmdirSync("db", {
 let database = new Database("db");
 if (!database.initialized) {
     database.initialize();
-    database.createTable("test", [Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString()]);
+    database.createTable("test", ["west", Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString(), Math.random().toString()]);
+    database.insertRow("random", "random", "", "random");
     database.createTable("users", ["username", "password", "email"]);
     database.insertRow("richardred15", "testing", "richardred15@gmail.com");
     database.insertRow("eric", "bill");
@@ -43,6 +44,8 @@ let start = Date.now();
 for (let i = 0; i < 5000; i++) {
     database.insertRow(Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random());
 }
+
+console.log(database.searchColumn("west", "random"));
 
 database.getRows();
 console.log(Date.now() - start);
