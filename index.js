@@ -18,12 +18,11 @@ fs.rmdirSync("db", {
 let alpha_num = "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456798";
 
 function rand(length = 8) {
-    let parts = alpha_num.split();
-    let len = parts.length;
+    let parts = alpha_num.split("");
     let out = "";
     for (let i = 0; i < length; i++) {
         let i = Math.floor(Math.random() * parts.length);
-        out += alpha_num[i];
+        out += parts[i];
     }
     return out;
 }
