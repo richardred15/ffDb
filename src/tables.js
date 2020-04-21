@@ -82,7 +82,7 @@ class TableManager {
         for (let column of columns) {
             fs.writeFileSync(this.directory + "/" + name + "/" + column + ".json", Encryption.encrypt("[]"));
         }
-        fs.writeFileSync(this.configuration_directory + "/" + name + "/conf.json", Encryption.encrypt(JSON.stringify(configuration_data)));
+        fs.writeFileSync(this.configuration_directory + "/" + name + "/conf.json", JSON.stringify(configuration_data));
 
         let table = new Table(this.directory, this.configuration_directory, name);
         this.table_data[name] = table;
@@ -109,7 +109,7 @@ class Table {
 
     load() {
         let data = fs.readFileSync(this.configuration_directory + "/conf.json");
-        data = Encryption.decrypt(data);
+        //data = Encryption.decrypt(data);
 
         this.configuration_data = JSON.parse(data);
         this.columns = this.configuration_data.columns;
@@ -179,7 +179,7 @@ class Table {
             this.writeColumn(column);
         }
         let data = JSON.stringify(configuration_data);
-        data = Encryption.encrypt(data);
+        //data = Encryption.encrypt(data);
         fs.writeFileSync(this.configuration_directory + "/conf.json", data);
     }
 
