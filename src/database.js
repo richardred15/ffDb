@@ -33,6 +33,7 @@ class Database {
      * @description Load configuration and table manager
      */
     load() {
+        if (this.initialized) throw new Errors.DatabaseAlreadyInitializedError();
         if (this.key != 0) {
             Configuration.key = this.key;
         } else {
@@ -59,8 +60,8 @@ class Database {
             }
             fs.writeFileSync(this.configuration_directory + "/conf.json", "{}");
             fs.writeFileSync(this.table_configuration_directory + "/tables.json", "[]");
-            this.initialized = true;
             this.load();
+            this.initialized = true;
             console.log("Database Initialized!");
         } else {
             throw new Errors.DatabaseAlreadyInitializedError();
@@ -120,7 +121,10 @@ class Database {
      * @description Get all rows from selected or indicated table
      */
     getRows(name = this.current_table_name) {
-        return this.table_manager.getRows(name);
+        if (this.table_manager.exists(name))
+            return this.table_manager.getRows(name);
+        else
+            throw new Errors.NoSuchTableError();
     }
 
     get() {
