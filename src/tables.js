@@ -180,6 +180,7 @@ class Table {
         }
         let data = JSON.stringify(configuration_data);
         //data = Encryption.encrypt(data);
+        console.log("WRITING");
         fs.writeFileSync(this.configuration_directory + "/conf.json", data);
     }
 

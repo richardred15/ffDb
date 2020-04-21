@@ -55,7 +55,7 @@ class Database {
             fs.mkdirSync(this.table_directory);
             if (this.key == 0) {
                 Configuration.store_key = true;
-                this.key = String(Math.random());
+                this.key = Database.rand(20);
                 this.key = crypto.createHash('sha256').update(String(this.key)).digest('base64').substr(0, 32);
             }
             fs.writeFileSync(this.configuration_directory + "/conf.json", "{}");
@@ -140,12 +140,6 @@ class Database {
         }
 
     }
-
-    static init(name, password = 0) {
-        let db = new Database(name, password);
-        if (!db.initialized) db.initialize();
-    }
-
     /**
      * 
      * @param {string} name 
@@ -159,6 +153,33 @@ class Database {
 
         this.table_manager.createTable(name, columns);
         this.current_table_name = name;
+    }
+
+    static alpha_num = "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    static rand_variances = [];
+
+    static calculateAvgVariance() {
+        if (Database.rand_variances.length == 0) return 0;
+        let sum = 0;
+        for (let v of Database.rand_variances) {
+            sum += v;
+        }
+        return 30.5 - (sum / Database.rand_variances.length);
+    }
+
+    static init(name, password = 0) {
+        let db = new Database(name, password);
+        if (!db.initialized) db.initialize();
+    }
+    static rand(length = 8) {
+        let parts = Database.alpha_num.split("");
+        let out = "";
+        for (let i = 0; i < length; i++) {
+            let i = Math.floor(Math.random() * parts.length);
+            out += parts[i];
+            Database.rand_variances.push(i);
+        }
+        return out;
     }
 }
 

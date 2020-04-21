@@ -6,10 +6,15 @@ ffDb makes several assumptions about typical use cases for small size, low maint
 
 All data stored is encrypted, either with a provided password or one will be generated automatically.
 
+```
+> npm install --save simple-ffdb
+```
+
+
 ## Simple Initialization
 
 ```javascript
-let Database = require("./src/database");
+let Database = require("simple-ffdb");
 let database = new Database("database_directory", password?);
 if (!database.initialized) {
     database.initialize() /* Generate folder and file structure in indicated directory */;

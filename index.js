@@ -15,22 +15,13 @@ process.stdin.on('data', function (data) {
 fs.rmdirSync("db", {
     recursive: true
 }); */
-let alpha_num = "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456798";
 
-function rand(length = 8) {
-    let parts = alpha_num.split("");
-    let out = "";
-    for (let i = 0; i < length; i++) {
-        let i = Math.floor(Math.random() * parts.length);
-        out += parts[i];
-    }
-    return out;
-}
+
 
 let database = new Database("db");
 if (!database.initialized) {
     database.initialize();
-    database.createTable("test", ["west", rand()]);
+    database.createTable("test", ["west", Database.rand()]);
     database.insertRow("random", "random", "", "random");
     database.createTable("users", ["username", "password", "email"]);
     database.insertRow("richardred15", "testing", "richardred15@gmail.com");
@@ -53,10 +44,14 @@ console.log("Rows: " + database.getRows());
 database.selectTable("test");
 let start = Date.now();
 for (let i = 0; i < 5000; i++) {
-    database.insertRow(Math.random(), Math.random());
+    database.insertRow({
+        rand: Database.rand(100)
+    }, Database.rand(100));
 }
 
 console.log(database.searchColumn("west", "random"));
 
 database.getRows();
 console.log(Date.now() - start);
+console.log(Database.calculateAvgVariance());
+console.log(Database.alpha_num.length);

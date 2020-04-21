@@ -1,4 +1,5 @@
 let fs = require("fs");
+let Errors = require("./error");
 
 class Configuration {
     constructor(directory) {
