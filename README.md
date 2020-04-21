@@ -25,7 +25,7 @@ if (!database.initialized) {
 
 ```
 > node
-> require("./src/database").init(name, password?);
+> require("simple-ffdb").init(name, password?);
 > .exit
 ```
 
