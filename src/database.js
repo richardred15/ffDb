@@ -11,11 +11,17 @@ class Database {
      * @param {string} password?
      * @description Creates a new Database object
      */
-    constructor(directory, password = 0) {
+    constructor(directory, password = 0, options = {}) {
+        if (password == {} || password == undefined || password == null || password == "") password = 0;
         this.key = password;
         if (this.key != 0) {
             this.key = crypto.createHash('sha256').update(String(this.key)).digest('base64').substr(0, 32);
         }
+        this.options = {
+            write_synchronous: false
+        };
+        Object.assign(this.options, options);
+        Configuration.write_synchronous = this.options.write_synchronous;
         this.directory = directory;
         this.configuration_directory = this.directory + "/.conf";
         this.table_configuration_directory = this.directory + "/.conf/tables";

@@ -34,5 +34,6 @@ class Configuration {
 }
 Configuration.algorithm = 'aes-256-ctr';
 Configuration.store_key = false;
+Configuration.write_synchronous = false;
 
 module.exports = Configuration;

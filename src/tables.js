@@ -1,5 +1,6 @@
 let fs = require('fs');
 const Errors = require("./error");
+let Configuration = require("./configuration");
 let Encryption = require("./encryption");
 
 class TableManager {
@@ -109,7 +110,6 @@ class Table {
 
     load() {
         let data = fs.readFileSync(this.configuration_directory + "/conf.json");
-        //data = Encryption.decrypt(data);
 
         this.configuration_data = JSON.parse(data);
         this.columns = this.configuration_data.columns;
@@ -165,9 +165,13 @@ class Table {
     }
 
     write() {
-        clearTimeout(this.write_timeout);
-        let instance = this;
-        this.write_timeout = setTimeout(() => instance.actuallyWrite(), 0);
+        if (!Configuration.write_synchronous) {
+            clearTimeout(this.write_timeout);
+            let instance = this;
+            this.write_timeout = setTimeout(() => instance.actuallyWrite(), 0);
+        } else {
+            this.actuallyWrite();
+        }
     }
 
     actuallyWrite() {
@@ -179,8 +183,6 @@ class Table {
             this.writeColumn(column);
         }
         let data = JSON.stringify(configuration_data);
-        //data = Encryption.encrypt(data);
-        console.log("WRITING");
         fs.writeFileSync(this.configuration_directory + "/conf.json", data);
     }
 

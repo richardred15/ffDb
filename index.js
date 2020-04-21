@@ -11,14 +11,16 @@ process.stdin.on('data', function (data) {
         process.exit();
     }
 });
-/* 
+
 fs.rmdirSync("db", {
     recursive: true
-}); */
+});
 
 
 
-let database = new Database("db");
+let database = new Database("db", undefined, {
+    write_synchronous: false
+});
 if (!database.initialized) {
     database.initialize();
     database.createTable("test", ["west", Database.rand()]);
@@ -50,8 +52,5 @@ for (let i = 0; i < 5000; i++) {
 }
 
 console.log(database.searchColumn("west", "random"));
-
 database.getRows();
 console.log(Date.now() - start);
-console.log(Database.calculateAvgVariance());
-console.log(Database.alpha_num.length);
