@@ -49,6 +49,11 @@ class TableManager {
         else throw new Errors.NoSuchTableError();
     }
 
+    deleteRows(table, where) {
+        if (!this.exists(table)) throw new Errors.NoSuchTableError();
+        this.table_data[table].deleteRows(where);
+    }
+
     updateRows(table, newData, where) {
         if (!this.exists(table)) throw new Errors.NoSuchTableError();
         this.table_data[table].updateRows(newData, where);
@@ -58,6 +63,10 @@ class TableManager {
         if (this.exists(name)) {
             return this.table_data[name].getRows();
         }
+    }
+
+    searchColumns(name, terms, limit) {
+        return this.table_data[name].searchColumns(terms, limit);
     }
 
     searchColumn(name, column, term) {
@@ -141,6 +150,12 @@ class Table {
         this.write();
     }
 
+    deleteRows(where) {
+        for (let column in where) {
+            let matches = this.searchColumn(column, where[column]);
+        }
+    }
+
     updateRows(newData, where) {
         if (where != undefined) {
             for (let column in where) {
@@ -192,6 +207,26 @@ class Table {
         fs.writeFileSync(this.directory + "/" + name + ".json", data);
     }
 
+    searchColumns(terms, limit) {
+        if (limit == Infinity) limit = this.rows;
+        if (limit == 0) return [];
+
+        let rows = this.getRows(limit);
+        let matches = [];
+        for (let row in rows) {
+            let match = true;
+            for (let term in terms) {
+                if (!new RegExp(terms[term]).test(rows[row][term])) match = false;
+            }
+            if (match) matches.push(parseInt(row));
+        }
+        let out = [];
+        for (let match of matches) {
+            out.push(rows[match]);
+        }
+        return out;
+    }
+
     searchColumn(column, term, limit = Infinity) {
         if (!this.hasColumn(column)) throw new Errors.NoSuchColumnError();
         if (limit == Infinity) limit = this.rows;
@@ -217,9 +252,9 @@ class Table {
         if (limit == Infinity) limit = this.rows;
         let r = [];
         for (let i = 0; i < limit; i++) {
-            let d = [];
+            let d = {};
             for (let name in this.cache) {
-                d.push(this.cache[name][i]);
+                d[name] = this.cache[name][i];
             }
             r.push(d);
         }

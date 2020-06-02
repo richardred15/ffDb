@@ -89,6 +89,16 @@ class Database {
 
     /**
      * 
+     * @param {Object} terms 
+     * @param {number} limit 
+     * @description Search a specified column for a specified term
+     */
+    searchColumns(terms, limit) {
+        return this.table_manager.searchColumns(this.current_table_name, terms, limit);
+    }
+
+    /**
+     * 
      * @param {string} name 
      * @param {string} term 
      * @description Search a specified column for a specified term
@@ -103,6 +113,14 @@ class Database {
      */
     insertRow() {
         this.table_manager.insertRow(this.current_table_name, arguments);
+    }
+
+    /**
+     * @param {} where
+     * @description Delete row containing specified values
+     */
+    deleteRows(where) {
+        this.table_manager.deleteRows(this.current_table_name, where);
     }
 
     /**

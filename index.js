@@ -12,9 +12,9 @@ process.stdin.on('data', function (data) {
     }
 });
 
-fs.rmdirSync("db", {
+/* fs.rmdirSync("db", {
     recursive: true
-});
+}); */
 
 
 
@@ -26,7 +26,6 @@ if (!database.initialized) {
     database.createTable("test", ["west", Database.rand()]);
     database.insertRow("random", "random", "", "random");
     database.createTable("users", ["username", "password", "email"]);
-    database.insertRow("richardred15", "testing", "richardred15@gmail.com");
     database.insertRow("eric", "bill");
     database.updateRows({
         password: "testing2"
@@ -37,14 +36,22 @@ if (!database.initialized) {
         email: 'testing123@gmail.com'
     });
 }
-console.log("Tables: " + database.table_manager.tables);
+//console.log("Tables: " + database.table_manager.tables);
 database.selectTable("users");
-let user_data = database.searchColumn("username", "richardred15");
-console.log("User Data: ", user_data);
-console.log("Rows: " + database.getRows());
+//let user_data = database.searchColumn("username", "richardred15");
+//console.log("User Data: ", user_data);
+//console.log("Rows: " + database.getRows());
 
-database.selectTable("test");
-let start = Date.now();
+let rows = database.searchColumns({
+    username: "^((?!richardred15).)*$"
+});
+
+console.log(rows);
+
+//database.selectTable("test");
+
+
+/* let start = Date.now();
 for (let i = 0; i < 5000; i++) {
     database.insertRow({
         rand: Database.rand(100)
@@ -53,4 +60,4 @@ for (let i = 0; i < 5000; i++) {
 
 console.log(database.searchColumn("west", "random"));
 database.getRows();
-console.log(Date.now() - start);
+console.log(Date.now() - start); */
