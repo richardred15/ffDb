@@ -51,7 +51,7 @@ class TableManager {
 
     deleteRows(table, where) {
         if (!this.exists(table)) throw new Errors.NoSuchTableError();
-        this.table_data[table].deleteRows(where);
+        return this.table_data[table].deleteRows(where);
     }
 
     updateRows(table, newData, where) {
@@ -151,9 +151,8 @@ class Table {
     }
 
     deleteRows(where) {
-        for (let column in where) {
-            let matches = this.searchColumn(column, where[column]);
-        }
+        let matches = this.searchColumns(where);
+        return matches;
     }
 
     updateRows(newData, where) {
@@ -162,7 +161,8 @@ class Table {
                 if (!this.hasColumn(column)) continue;
                 let term = where[column];
                 for (let i = this.rows - 1; i >= 0; i--) {
-                    if (this.cache[column][i] == term) {
+                    let result = (new RegExp(term)).test(this.cache[column][i]);
+                    if (result) {
                         for (let col in newData) {
                             this.cache[col][i] = newData[col];
                         }
@@ -216,9 +216,13 @@ class Table {
         for (let row in rows) {
             let match = true;
             for (let term in terms) {
-                if (!new RegExp(terms[term]).test(rows[row][term])) match = false;
+                match = (new RegExp(terms[term])).test(rows[row][term]);
+                if (match) {
+                    matches.push(parseInt(row));
+                    break;
+                }
             }
-            if (match) matches.push(parseInt(row));
+
         }
         let out = [];
         for (let match of matches) {

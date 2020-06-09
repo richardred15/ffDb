@@ -10,6 +10,8 @@ All data stored is encrypted, either with a provided password or one will be gen
 > npm install --save simple-ffdb
 ```
 
+### Basic Documentation
+![Database Docs](https://richard.works/projects/ffDb/doc/Database.html)
 
 ## Simple Initialization
 
