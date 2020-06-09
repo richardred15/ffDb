@@ -68,7 +68,6 @@ class Database {
             fs.writeFileSync(this.table_configuration_directory + "/tables.json", "[]");
             this.load();
             this.initialized = true;
-            console.log("Database Initialized!");
         } else {
             throw new Errors.DatabaseAlreadyInitializedError();
         }
