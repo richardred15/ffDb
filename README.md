@@ -11,7 +11,7 @@ All data stored is encrypted, either with a provided password or one will be gen
 ```
 
 ### Basic Documentation
-[Database Docs](https://richard.works/projects/ffDb/doc/Database.html)
+[Database Doc](https://richard.works/projects/ffDb/doc/Database.html)
 
 ## Simple Initialization
 
