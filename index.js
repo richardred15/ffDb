@@ -1,16 +1,5 @@
 let Database = require("./src/database");
 let fs = require("fs");
-process.stdin.setEncoding('utf8');
-process.stdin.on('data', function (data) {
-    data = data.trim();
-    switch (data) {
-
-    }
-
-    if (data == "exit") {
-        process.exit();
-    }
-});
 
 function fail() {
     process.stdout.write(" (fail)\n");
@@ -70,17 +59,18 @@ if (database) {
 } else {
     fail();
 }
-process.exit(0);
-//database.selectTable("test");
+database.selectTable("test");
 
-
-/* let start = Date.now();
+process.stdout.write("Inserting 5000 random rows... ")
+let start = Date.now();
 for (let i = 0; i < 5000; i++) {
     database.insertRow({
         rand: Database.rand(100)
     }, Database.rand(100));
 }
+let time = Date.now() - start;
+process.stdout.write(`Inserted in ${time}ms...`);
+if (time < 150) pass();
+else fail();
 
-console.log(database.searchColumn("west", "random"));
-database.getRows();
-console.log(Date.now() - start); */
+process.exit(0);
