@@ -1,4 +1,0 @@
-A simple flat file database with encryption for NodeJS
-
-$github=https://github.com/richardred15/ffDb
-$new=true
