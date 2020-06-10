@@ -48,7 +48,7 @@ class TableManager {
     }
 
     loadTable(name) {
-        if (!this.exists(table)) throw new Errors.NoSuchTableError();
+        if (!this.exists(name)) throw new Errors.NoSuchTableError();
         if (!this.tableLoaded(name))
             this.table_data[name] = new Table(this.directory, this.configuration_directory, name);
     }
