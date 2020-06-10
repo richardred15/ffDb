@@ -1,14 +1,15 @@
 let fs = require('fs');
 const crypto = require('crypto');
-let TableManager = require("./tables");
+let TableManager = require("./table_manager");
 const Errors = require("./error");
 let Configuration = require("./configuration");
 
 class Database {
     /**
      * Creates a new Database object
-     * @param {string} directory The working directory for the database
-     * @param {string} password? An optional password with which to encrypt the data
+     * @param {string} directory - The working directory for the database
+     * @param {string=} password - An optional password with which to encrypt the data
+     * @param {any=} options - A set of configuration options
      * @constructor 
      */
     constructor(directory, password = 0, options = {}) {
@@ -36,10 +37,13 @@ class Database {
         Database.alpha_num_symbols = Database.alpha_num_symbols.split("").sort((a, b) => {
             return Math.random() - Math.random();
         }).join('');
-
-
     }
 
+    /**
+     * Cleanup before exit
+     * @param {TableManager} table_manager 
+     * @ignore
+     */
     exitHandler(table_manager) {
         if (table_manager.awaitingWrite()) {
             table_manager.writeAll();
@@ -61,6 +65,7 @@ class Database {
 
     /**
      * Load configuration and table manager
+     * @ignore
      */
     load() {
         if (this.initialized) throw new Errors.DatabaseAlreadyInitializedError();
@@ -185,7 +190,7 @@ class Database {
 
     /**
      * Get all rows from selected table
-     * @param {string} name? Specify a table from which to get all rows
+     * @param {string=} name Specify a table from which to get all rows
      * @returns {object[]} Fetched rows
      */
     getRows(name = this.current_table_name) {
@@ -196,18 +201,6 @@ class Database {
             throw new Errors.NoSuchTableError();
     }
 
-    get() {
-        if (!this.initialized) {
-            throw new Errors.DatabaseNotInitializedError();
-        }
-
-    }
-
-    set() {
-        if (!this.initialized) {
-            throw new Errors.DatabaseNotInitializedError();
-        }
-    }
     /**
      * Create a new table with specified columns
      * @param {string} name The name of the new table
@@ -223,9 +216,20 @@ class Database {
         this.current_table_name = name;
     }
 
+    /**
+     * @ignore
+     */
     static alpha_num_symbols = "{}[];':\",./<>?-=_+$#@!%^&*ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    /**
+     * @ignore
+     */
     static alpha_num = "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
+    /**
+     * Statically initialize a new database
+     * @param {string} name 
+     * @param {string} password 
+     */
     static init(name, password = 0) {
         let db = new Database(name, password);
         if (!db.initialized) db.initialize();
