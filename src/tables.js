@@ -276,7 +276,8 @@ class Table {
             let match = true;
             for (let term in terms) {
                 if (!this.hasColumn(term)) continue;
-                match = (new RegExp(terms[term])).test(rows[row][term]);
+                if (term == "") match = term == rows[row][term]
+                else match = (new RegExp(terms[term])).test(rows[row][term]);
                 if (match) {
                     matches.push(parseInt(row));
                     break;
@@ -298,8 +299,11 @@ class Table {
 
         let data = this.cache[column];
         let results = [];
+        let match = true;
         for (let i = 0; i < data.length; i++) {
-            if (data[i] == term) {
+            if (term == "") match = term == data[i];
+            else match = (new RegExp(term)).test(data[i]);
+            if (match) {
                 results.push(i);
                 limit--;
                 if (limit < 0) break;
