@@ -277,7 +277,7 @@ class Table {
             for (let term in terms) {
                 if (!this.hasColumn(term)) continue;
                 if (terms[term] == "") match = terms[term] == rows[row][term]
-                else match = (new RegExp(terms[term])).test(rows[row][term]);
+                else match = (new RegExp("^" + terms[term] + "$")).test(rows[row][term]);
                 if (match) {
                     matches.push(parseInt(row));
                     break;
@@ -305,7 +305,7 @@ class Table {
         let match = true;
         for (let i = 0; i < data.length; i++) {
             if (term == "") match = (term == data[i]);
-            else match = (new RegExp(term)).test(data[i]);
+            else match = (new RegExp("^" + term + "$")).test(data[i]);
             if (match) {
                 results.push(i);
                 limit--;
