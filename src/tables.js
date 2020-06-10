@@ -237,6 +237,7 @@ class Table {
     }
 
     actuallyWrite() {
+        clearTimeout(this.write_timeout);
         let configuration_data = {
             columns: this.columns,
             rows: this.rows

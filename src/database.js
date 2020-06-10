@@ -67,14 +67,11 @@ class Database {
         this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);
         //do something when app is closing
         process.on('exit', this.exitHandler.bind(null, this.table_manager));
-
         //catches ctrl+c event
         process.on('SIGINT', this.exitHandler.bind(null, this.table_manager));
-
         // catches "kill pid" (for example: nodemon restart)
         process.on('SIGUSR1', this.exitHandler.bind(null, this.table_manager));
         process.on('SIGUSR2', this.exitHandler.bind(null, this.table_manager));
-
         //catches uncaught exceptions
         process.on('uncaughtException', this.exitHandler.bind(null, this.table_manager));
         this.initialized = true;
