@@ -48,6 +48,7 @@ class TableManager {
     }
 
     loadTable(name) {
+        if (!this.exists(table)) throw new Errors.NoSuchTableError();
         if (!this.tableLoaded(name))
             this.table_data[name] = new Table(this.directory, this.configuration_directory, name);
     }
@@ -56,6 +57,8 @@ class TableManager {
         if (this.exists(name)) {
             if (!this.tableLoaded(name)) this.loadTable(name);
             return this.table_data[name].columns;
+        } else {
+            throw new Errors.NoSuchTableError();
         }
     }
 
@@ -78,11 +81,17 @@ class TableManager {
     getRows(name) {
         if (this.exists(name)) {
             return this.table_data[name].getRows();
+        } else {
+            throw new Errors.NoSuchTableError();
         }
     }
 
     searchColumns(name, terms, limit) {
-        return this.table_data[name].searchColumns(terms, limit);
+        if (this.exists(name)) {
+            return this.table_data[name].searchColumns(terms, limit);
+        } else {
+            throw new Errors.NoSuchTableError();
+        }
     }
 
     searchColumn(name, column, term) {
