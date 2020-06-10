@@ -276,14 +276,17 @@ class Table {
             let match = true;
             for (let term in terms) {
                 if (!this.hasColumn(term)) continue;
-                if (term == "") match = term == rows[row][term]
+                if (terms[term] == "") match = terms[term] == rows[row][term]
                 else match = (new RegExp(terms[term])).test(rows[row][term]);
                 if (match) {
                     matches.push(parseInt(row));
                     break;
                 }
             }
-
+            if (match) {
+                limit--;
+                if (limit < 0) break;
+            }
         }
         let out = [];
         for (let match of matches) {
@@ -301,7 +304,7 @@ class Table {
         let results = [];
         let match = true;
         for (let i = 0; i < data.length; i++) {
-            if (term == "") match = term == data[i];
+            if (term == "") match = (term == data[i]);
             else match = (new RegExp(term)).test(data[i]);
             if (match) {
                 results.push(i);
