@@ -45,8 +45,8 @@ class Database {
             table_manager.writeAll();
         }
         if (arguments[1] != 0) {
-            if (arguments[1] == 1) console.log(arguments[1]);
-            process.exit(arguments[2]);
+            if (arguments[2] == 'uncaughtException') console.log(arguments[1]);
+            process.exit(1);
         } else {
             process.exit(0);
         }
