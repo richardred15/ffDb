@@ -275,6 +275,7 @@ class Table {
         for (let row in rows) {
             let match = true;
             for (let term in terms) {
+                if (!this.hasColumn(term)) continue;
                 match = (new RegExp(terms[term])).test(rows[row][term]);
                 if (match) {
                     matches.push(parseInt(row));
