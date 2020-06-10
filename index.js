@@ -45,6 +45,12 @@ if (database) {
         if (result && result.length == 2) pass();
         else fail();
     }
+    process.stdout.write("Testing row deletion...");
+    let deleted = database.deleteRows({
+        username: "eric"
+    });
+    if (deleted[0].username == "eric") pass();
+    else fail();
     //console.log("Tables: " + database.table_manager.tables);
     process.stdout.write("Selecting Table...");
     database.selectTable("users");
@@ -62,10 +68,6 @@ if (database) {
     } else {
         fail();
     }
-
-    rows = database.deleteRows({
-        username: "richardred15"
-    });
 } else {
     fail();
 }
@@ -83,37 +85,38 @@ let time = Date.now() - start;
 process.stdout.write(`Inserted in ${time}ms (max ${expected_time}ms)...`);
 if (time < expected_time) pass();
 else fail();
-process.stdout.write(`Testing entropy (shannon)...`)
-let rands = [];
-for (let i = 0; i < 100; i++) {
-    let rand = Database.rand(50);
-    let entropy = Database.test_random(rand);
-    rands.push(entropy);
+setTimeout(finish, 100);
+
+function finish() {
+    process.stdout.write(`Testing entropy (shannon)...`)
+    let rands = [];
+    for (let i = 0; i < 100; i++) {
+        let rand = Database.rand(50);
+        let entropy = Database.test_random(rand);
+        rands.push(entropy);
+    }
+    let entropy = 0;
+    let sum = 0;
+    rands.forEach((rand) => {
+        sum += rand;
+    });
+    entropy = sum / rands.length;
+    process.stdout.write(entropy.toString());
+    if (entropy > 5) pass();
+    else {
+        fail();
+    }
+    process.stdout.write("Calculating Random Variance...")
+    let variances = [];
+    rands.forEach((rand) => {
+        variances.push(Math.abs(entropy - rand));
+    });
+    sum = 0;
+    variances.forEach((variance) => {
+        sum += variance;
+    })
+    let variance = sum / variances.length;
+    if (variance > 0.05) pass();
+    else fail();
+    process.exit(0);
 }
-let entropy = 0;
-let sum = 0;
-rands.forEach((rand) => {
-    sum += rand;
-});
-entropy = sum / rands.length;
-process.stdout.write(entropy.toString());
-if (entropy > 5) pass();
-else {
-    fail();
-}
-process.stdout.write("Calculating Random Variance...")
-let variances = [];
-rands.forEach((rand) => {
-    variances.push(Math.abs(entropy - rand));
-});
-sum = 0;
-variances.forEach((variance) => {
-    sum += variance;
-})
-let variance = sum / variances.length;
-if (variance > 0.05) pass();
-else fail();
-database.selectTable("users");
-console.log("\n\n     Sample Users Table...");
-process.stdout.write(JSON.stringify(database.getRows(), {}, "     "));
-process.exit(0);

@@ -36,6 +36,21 @@ class Database {
         Database.alpha_num_symbols = Database.alpha_num_symbols.split("").sort((a, b) => {
             return Math.random() - Math.random();
         }).join('');
+
+
+    }
+
+    exitHandler(table_manager) {
+        if (table_manager.awaitingWrite()) {
+            table_manager.writeAll();
+        }
+    }
+
+    /**
+     * Write all data in memory to disk
+     */
+    writeOut() {
+        this.table_manager.writeAll();
     }
 
     /**
@@ -50,6 +65,18 @@ class Database {
         }
         this.configuration = new Configuration(this.configuration_directory);
         this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);
+        //do something when app is closing
+        process.on('exit', this.exitHandler.bind(null, this.table_manager));
+
+        //catches ctrl+c event
+        process.on('SIGINT', this.exitHandler.bind(null, this.table_manager));
+
+        // catches "kill pid" (for example: nodemon restart)
+        process.on('SIGUSR1', this.exitHandler.bind(null, this.table_manager));
+        process.on('SIGUSR2', this.exitHandler.bind(null, this.table_manager));
+
+        //catches uncaught exceptions
+        process.on('uncaughtException', this.exitHandler.bind(null, this.table_manager));
         this.initialized = true;
     }
 
@@ -85,6 +112,7 @@ class Database {
     selectTable(name) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
         if (this.table_manager.exists(name)) {
+            if (this.table_manager.awaitingWrite()) this.table_manager.writeAll();
             this.current_table_name = name;
             this.table_manager.loadTable(name);
         } else
@@ -93,8 +121,9 @@ class Database {
 
     /**
      * Search specified columns for a specified term
-     * @param {Object} terms An object with column keys and data values
+     * @param {object} terms An object with column keys and data values
      * @param {number} limit Number of search results to return
+     * @returns {object[]} Array of matches
      */
     searchColumns(terms, limit) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -105,6 +134,7 @@ class Database {
      * Search a specified column for a specified term
      * @param {string} name The name of the column you wish to search
      * @param {string} term The term for which you wish to search
+     * @returns {object} The matching row
      */
     searchColumn(name, term) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -122,17 +152,19 @@ class Database {
 
     /**
      * Delete row containing specified values
-     * @param {Object} where An object defining search criteria {column:term}
+     * @param {object} where An object defining search criteria {column:term}
+     * @param {number} limit Limit the number of deleted rows
+     * @returns {object[]} Deleted rows
      */
-    deleteRows(where) {
+    deleteRows(where, limit) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
-        return this.table_manager.deleteRows(this.current_table_name, where);
+        return this.table_manager.deleteRows(this.current_table_name, where, limit);
     }
 
     /**
      * Updates rows with new data where current data matches
-     * @param {Object} newData {column:name,data:value}
-     * @param {Object} where {column:term}
+     * @param {object} newData {column:name,data:value}
+     * @param {object} where {column:term}
      */
     updateRows(newData, where) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -141,6 +173,7 @@ class Database {
 
     /**
      * List columns from selected table
+     * @returns {string[]} Array of table columns
      */
     tableColumns() {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -150,6 +183,7 @@ class Database {
     /**
      * Get all rows from selected table
      * @param {string} name? Specify a table from which to get all rows
+     * @returns {object[]} Fetched rows
      */
     getRows(name = this.current_table_name) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -175,12 +209,13 @@ class Database {
      * Create a new table with specified columns
      * @param {string} name The name of the new table
      * @param {string[]} columns An array of column names
+     * @throws {DatabaseNotInitializedError}
      */
     createTable(name, columns) {
         if (!this.initialized) {
             throw new Errors.DatabaseNotInitializedError();
         }
-
+        if (this.table_manager.awaitingWrite()) this.table_manager.writeAll();
         this.table_manager.createTable(name, columns);
         this.current_table_name = name;
     }
@@ -196,6 +231,7 @@ class Database {
     /**
      * Get a random string
      * @param {number} length
+     * @returns {string}
      */
     static rand(length = 8) {
         let parts = Database.alpha_num_symbols.split("");
@@ -211,6 +247,7 @@ class Database {
     /**
      * Get a random string with only alpha-numeric values
      * @param {number} length 
+     * @returns {string}
      */
     static rand_safe(length = 8) {
         let parts = Database.alpha_num.split("");
@@ -224,7 +261,8 @@ class Database {
     }
     /**
      * Test a string for randomness
-     * @param {string} test 
+     * @param {string} test
+     * @returns {number} 
      */
     static test_random(test) {
         let parts = test.split("");

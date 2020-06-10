@@ -23,6 +23,22 @@ class TableManager {
         fs.writeFileSync(this.configuration_directory + "/tables.json", JSON.stringify(this.tables));
     }
 
+    awaitingWrite() {
+        for (let table of this.tables) {
+            this.loadTable(table);
+            if (!this.table_data[table].written) return true;
+        }
+    }
+
+    writeAll() {
+        for (let table of this.tables) {
+            this.loadTable(table);
+            if (!this.table_data[table].written) {
+                this.table_data[table].actuallyWrite();
+            }
+        }
+    }
+
     exists(name) {
         return this.tables.includes(name);
     }
@@ -49,9 +65,9 @@ class TableManager {
         else throw new Errors.NoSuchTableError();
     }
 
-    deleteRows(table, where) {
+    deleteRows(table, where, limit) {
         if (!this.exists(table)) throw new Errors.NoSuchTableError();
-        return this.table_data[table].deleteRows(where);
+        return this.table_data[table].deleteRows(where, limit);
     }
 
     updateRows(table, newData, where) {
@@ -109,6 +125,7 @@ class Table {
         this.columns = [];
         this.rows = 0;
         this.cache = {};
+        this.written = false;
         this.write_timeout = undefined;
         this.load();
     }
@@ -150,9 +167,38 @@ class Table {
         this.write();
     }
 
-    deleteRows(where) {
-        let matches = this.searchColumns(where);
-        return matches;
+    deleteRow(index) {
+        for (let i = 0; i < this.columns.length; i++) {
+            let c = this.columns[i];
+            this.cache[c].splice(index, 1);
+        }
+        this.rows--;
+        this.write();
+    }
+
+    deleteRows(terms, limit = Infinity) {
+        if (limit == Infinity) limit = this.rows;
+        if (limit == 0) return [];
+
+        let rows = this.getRows(limit);
+        let matches = [];
+        for (let row in rows) {
+            let match = true;
+            for (let term in terms) {
+                match = (new RegExp(terms[term])).test(rows[row][term]);
+                if (match) {
+                    matches.push(parseInt(row));
+                    this.deleteRow(row);
+                    break;
+                }
+            }
+
+        }
+        let out = [];
+        for (let match of matches) {
+            out.push(rows[match]);
+        }
+        return out;
     }
 
     updateRows(newData, where) {
@@ -183,6 +229,7 @@ class Table {
         if (!Configuration.write_synchronous) {
             clearTimeout(this.write_timeout);
             let instance = this;
+            this.written = false;
             this.write_timeout = setTimeout(() => instance.actuallyWrite(), 0);
         } else {
             this.actuallyWrite();
@@ -199,6 +246,7 @@ class Table {
         }
         let data = JSON.stringify(configuration_data);
         fs.writeFileSync(this.configuration_directory + "/conf.json", data);
+        this.written = true;
     }
 
     writeColumn(name) {
@@ -207,7 +255,7 @@ class Table {
         fs.writeFileSync(this.directory + "/" + name + ".json", data);
     }
 
-    searchColumns(terms, limit) {
+    searchColumns(terms, limit = Infinity) {
         if (limit == Infinity) limit = this.rows;
         if (limit == 0) return [];
 
