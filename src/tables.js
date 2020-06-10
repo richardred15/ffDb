@@ -61,7 +61,7 @@ class TableManager {
 
     insertRow(name, data) {
         if (this.exists(name))
-            this.table_data[name].insert(data);
+            return this.table_data[name].insert(data);
         else throw new Errors.NoSuchTableError();
     }
 
@@ -165,6 +165,7 @@ class Table {
         }
         this.rows++;
         this.write();
+        return true;
     }
 
     deleteRow(index) {

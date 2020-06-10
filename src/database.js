@@ -44,6 +44,12 @@ class Database {
         if (table_manager.awaitingWrite()) {
             table_manager.writeAll();
         }
+        if (arguments[1] != 0) {
+            if (arguments[1] == 1) console.log(arguments[1]);
+            process.exit(arguments[2]);
+        } else {
+            process.exit(0);
+        }
     }
 
     /**
@@ -144,7 +150,7 @@ class Database {
      */
     insertRow() {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
-        this.table_manager.insertRow(this.current_table_name, arguments);
+        return this.table_manager.insertRow(this.current_table_name, arguments);
     }
 
     /**
