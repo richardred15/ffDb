@@ -40,7 +40,23 @@ class NoSuchColumnError extends Error {
     }
 }
 
+class InvalidPasswordError extends Error {
+    constructor(message = "The provided password is invalid!") {
+        super(message);
+        this.name = "InvalidPasswordError";
+    }
+}
+
+class InvalidOrCorruptError extends Error {
+    constructor(message = "The provided password is invalid or the database is corrupt!") {
+        super(message);
+        this.name = "InvalidOrCorruptError";
+    }
+}
+
 let Errors = {};
+Errors.InvalidOrCorruptError = InvalidOrCorruptError;
+Errors.InvalidPasswordError = InvalidPasswordError;
 Errors.NoSuchTableError = NoSuchTableError;
 Errors.NoSuchColumnError = NoSuchColumnError;
 Errors.InvalidNameError = InvalidNameError;

@@ -41,13 +41,11 @@ class Database {
 
     /**
      * Cleanup before exit
-     * @param {TableManager} table_manager 
+     * @param {Database} database 
      * @ignore
      */
-    exitHandler(table_manager) {
-        if (table_manager.awaitingWrite()) {
-            table_manager.writeAll();
-        }
+    exitHandler(database) {
+        database.cleanup();
         if (arguments[1] != 0) {
             if (arguments[2] == 'uncaughtException') console.log(arguments[1]);
             process.exit(1);
@@ -57,10 +55,14 @@ class Database {
     }
 
     /**
-     * Write all data in memory to disk
+     * Cleanup and write data
      */
-    writeOut() {
-        this.table_manager.writeAll();
+    cleanup() {
+        if (this.initialized) {
+            if (this.table_manager.awaitingWrite()) {
+                this.table_manager.writeAll();
+            }
+        }
     }
 
     /**
@@ -75,16 +77,17 @@ class Database {
             Configuration.store_key = true;
         }
         this.configuration = new Configuration(this.configuration_directory);
+        if (Configuration.key == 0) throw new Errors.InvalidPasswordError();
         this.table_manager = new TableManager(this.table_directory, this.table_configuration_directory);
         //do something when app is closing
-        process.on('exit', this.exitHandler.bind(null, this.table_manager));
+        process.on('exit', this.exitHandler.bind(null, this));
         //catches ctrl+c event
-        process.on('SIGINT', this.exitHandler.bind(null, this.table_manager));
+        process.on('SIGINT', this.exitHandler.bind(null, this));
         // catches "kill pid" (for example: nodemon restart)
-        process.on('SIGUSR1', this.exitHandler.bind(null, this.table_manager));
-        process.on('SIGUSR2', this.exitHandler.bind(null, this.table_manager));
+        process.on('SIGUSR1', this.exitHandler.bind(null, this));
+        process.on('SIGUSR2', this.exitHandler.bind(null, this));
         //catches uncaught exceptions
-        process.on('uncaughtException', this.exitHandler.bind(null, this.table_manager));
+        process.on('uncaughtException', this.exitHandler.bind(null, this));
         this.initialized = true;
     }
 
@@ -130,12 +133,13 @@ class Database {
     /**
      * Search specified columns for a specified term
      * @param {object} terms An object with column keys and data values
-     * @param {number} limit Number of search results to return
+     * @param {number} [limit=Infinity] Number of search results to return
+     * @param {boolean} [or=false] - Search by ( term AND term ), when true ( term OR term )
      * @returns {object[]} Array of matches
      */
-    searchColumns(terms, limit) {
+    searchColumns(terms, limit, or) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
-        return this.table_manager.searchColumns(this.current_table_name, terms, limit);
+        return this.table_manager.searchColumns(this.current_table_name, terms, limit, or);
     }
 
     /**
@@ -159,9 +163,19 @@ class Database {
     }
 
     /**
+     * Create a new empty column
+     * @param {string} name The name of the column you wish to create
+     * @param {string} [fill=""] Content to place in each row of the new column
+     */
+    createColumn(name, fill) {
+        if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
+        return this.table_manager.createColumn(this.current_table_name, name, fill);
+    }
+
+    /**
      * Delete row containing specified values
      * @param {object} where An object defining search criteria {column:term}
-     * @param {number} limit Limit the number of deleted rows
+     * @param {number} [limit=Infinity] Limit the number of deleted rows
      * @returns {object[]} Deleted rows
      */
     deleteRows(where, limit) {

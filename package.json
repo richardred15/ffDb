@@ -1,0 +1,24 @@
+{
+  "name": "simple-ffdb",
+  "version": "0.1.19",
+  "description": "Flat file database",
+  "main": "src/database.js",
+  "engineStrict": true,
+  "scripts": {
+    "test": "node index.js",
+    "build_docs": "jsdoc src/database.js -d doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardred15/ffDb.git"
+  },
+  "author": "richardred5",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richardred15/ffDb/issues"
+  },
+  "homepage": "https://github.com/richardred15/ffDb#readme",
+  "dependencies": {
+    "node": "^12.0.0"
+  }
+}
