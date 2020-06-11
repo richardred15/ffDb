@@ -68,6 +68,7 @@ class Database {
     /**
      * Load configuration and table manager
      * @ignore
+     * @throws {DatabaseAlreadyInitializedError}
      */
     load() {
         if (this.initialized) throw new Errors.DatabaseAlreadyInitializedError();
@@ -93,6 +94,7 @@ class Database {
 
     /**
      * Initialize a new database
+     * @throws {DatabaseAlreadyInitializedError}
      */
     initialize() {
         if (!this.initialized) {
@@ -136,6 +138,8 @@ class Database {
      * @param {number} [limit=Infinity] Number of search results to return
      * @param {boolean} [or=false] - Search by ( term AND term ), when true ( term OR term )
      * @returns {object[]} Array of matches
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     searchColumns(terms, limit, or) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -147,6 +151,8 @@ class Database {
      * @param {string} name The name of the column you wish to search
      * @param {string} term The term for which you wish to search
      * @returns {object} The matching row
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     searchColumn(name, term) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -156,6 +162,8 @@ class Database {
     /**
      * Insert row containing specified values
      * @param {any[]} arguments Insert a row from an object where {column:data}
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     insertRow() {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -166,6 +174,8 @@ class Database {
      * Create a new empty column
      * @param {string} name The name of the column you wish to create
      * @param {string} [fill=""] Content to place in each row of the new column
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     createColumn(name, fill) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -177,6 +187,8 @@ class Database {
      * @param {object} where An object defining search criteria {column:term}
      * @param {number} [limit=Infinity] Limit the number of deleted rows
      * @returns {object[]} Deleted rows
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     deleteRows(where, limit) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -187,6 +199,8 @@ class Database {
      * Updates rows with new data where current data matches
      * @param {object} newData {column:name,data:value}
      * @param {object} where {column:term}
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     updateRows(newData, where) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -196,6 +210,8 @@ class Database {
     /**
      * List columns from selected table
      * @returns {string[]} Array of table columns
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     tableColumns() {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
@@ -206,6 +222,8 @@ class Database {
      * Get all rows from selected table
      * @param {string=} [name] Specify a table from which to get all rows
      * @returns {object[]} Fetched rows
+     * @throws {DatabaseNotInitializedError}
+     * @throws {NoSuchTableError}
      */
     getRows(name = this.current_table_name) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
