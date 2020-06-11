@@ -204,7 +204,7 @@ class Database {
 
     /**
      * Get all rows from selected table
-     * @param {string=} name Specify a table from which to get all rows
+     * @param {string=} [name] Specify a table from which to get all rows
      * @returns {object[]} Fetched rows
      */
     getRows(name = this.current_table_name) {
@@ -241,8 +241,8 @@ class Database {
 
     /**
      * Statically initialize a new database
-     * @param {string} name 
-     * @param {string} password 
+     * @param {string} name Name of the new database
+     * @param {string} [password] Password with which to encrypt the new database
      */
     static init(name, password = 0) {
         let db = new Database(name, password);
@@ -251,7 +251,7 @@ class Database {
 
     /**
      * Get a random string
-     * @param {number} length
+     * @param {number} [length=8]
      * @returns {string}
      */
     static rand(length = 8) {
@@ -267,7 +267,7 @@ class Database {
 
     /**
      * Get a random string with only alpha-numeric values
-     * @param {number} length 
+     * @param {number} [length=8]
      * @returns {string}
      */
     static rand_safe(length = 8) {
