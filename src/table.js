@@ -112,7 +112,8 @@ class Table {
                     let result = (new RegExp(term)).test(this.cache[column][i]);
                     if (result) {
                         for (let col in newData) {
-                            this.cache[col][i] = newData[col];
+                            if (this.cache[col])
+                                this.cache[col][i] = newData[col];
                         }
                     }
                 }
@@ -120,7 +121,8 @@ class Table {
         } else {
             for (let i = this.rows - 1; i >= 0; i--) {
                 for (let col in newData) {
-                    this.cache[col][i] = newData[col];
+                    if (this.cache[col])
+                        this.cache[col][i] = newData[col];
                 }
             }
         }

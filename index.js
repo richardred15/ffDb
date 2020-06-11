@@ -41,13 +41,15 @@ if (database) {
         assert(database.getRows().length == 2, "Inserting Rows");
         database.updateRows({
             password: "testing2",
-            email: "testing123@test.com"
+            email: "testing123@test.com",
+            no_exist: "test"
         }, {
             username: ".*"
         });
         let result = database.searchColumn("password", "testing2");
         assert(result && result.length == 2, "Update rows | Search Column");
     }
+    database.selectTable("test");
     database.selectTable("users");
 
     assert(database.current_table_name == "users", "Selecting Table");
