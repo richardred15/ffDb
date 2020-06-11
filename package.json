@@ -6,7 +6,7 @@
   "engineStrict": true,
   "scripts": {
     "test": "node index.js",
-    "build_docs": "jsdoc src/database.js -d doc"
+    "build_docs": "jsdoc src/database.js -d doc -t ../jsdoc-themes/braintree -u tutorials"
   },
   "repository": {
     "type": "git",

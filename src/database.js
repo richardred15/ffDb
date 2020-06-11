@@ -4,6 +4,9 @@ let TableManager = require("./table_manager");
 const Errors = require("./error");
 let Configuration = require("./configuration");
 
+/**
+ * @tutorial Database
+ */
 class Database {
     /**
      * Creates a new Database object
