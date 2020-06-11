@@ -1,12 +1,13 @@
 {
   "name": "simple-ffdb",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Flat file database",
   "main": "src/database.js",
   "engineStrict": true,
   "scripts": {
     "test": "node index.js",
-    "build_docs": "jsdoc src/database.js -d doc -t ../jsdoc-themes/braintree -u tutorials"
+    "build_docs": "jsdoc src/database.js -d doc -t ../jsdoc-themes/braintree -u tutorials",
+    "package": "package.bat %npm_package_version%"
   },
   "repository": {
     "type": "git",

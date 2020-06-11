@@ -173,6 +173,11 @@ class Database {
         return this.table_manager.insertRow(this.current_table_name, arguments);
     }
 
+    insertRowObject(object) {
+        if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
+        return this.table_manager.insertRowObject(this.current_table_name, object);
+    }
+
     /**
      * Create a new empty column
      * @param {string} name The name of the column you wish to create

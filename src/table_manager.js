@@ -64,7 +64,13 @@ class TableManager {
 
     insertRow(table, data) {
         if (this.exists(table))
-            return this.tables[table].insert(data);
+            return this.tables[table].insertRow(data);
+        else throw new Errors.NoSuchTableError();
+    }
+
+    insertRowObject(table, data) {
+        if (this.exists(table))
+            return this.tables[table].insertRowObject(data);
         else throw new Errors.NoSuchTableError();
     }
 

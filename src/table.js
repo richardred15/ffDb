@@ -38,7 +38,7 @@ class Table {
         this.rows = this.configuration_data.rows;
     }
 
-    insert(data) {
+    insertRow(data) {
         let newData = [];
         for (let arg in data) {
             newData.push(data[arg]);
@@ -52,6 +52,19 @@ class Table {
         for (let i = 0; i < this.columns.length; i++) {
             let c = this.columns[i];
             this.cache[c].push(newData[i]);
+        }
+        this.rows++;
+        this.write();
+        return true;
+    }
+
+    insertRowObject(data) {
+        for (let col of this.columns) {
+            if (data[col]) {
+                this.cache[col].push(data[col]);
+            } else {
+                this.cache[col].push("");
+            }
         }
         this.rows++;
         this.write();

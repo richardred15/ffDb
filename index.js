@@ -36,7 +36,10 @@ if (database) {
         database.insertRow("random", "random", "", "random");
         database.createTable("users", ["username", "password", "email"]);
         assert(database.current_table_name == "users", "Creating Table");
-        database.insertRow("eric", "bill");
+        database.insertRowObject({
+            username: "eric",
+            password: "bill"
+        });
         database.insertRow("richardred15", "testing3");
         assert(database.getRows().length == 2, "Inserting Rows");
         database.updateRows({
@@ -69,7 +72,7 @@ if (database) {
 }
 database.selectTable("test");
 let inserts = 10000;
-let expected_time = (0.03 * inserts) + 5;
+let expected_time = (0.02 * inserts) + 5;
 let start = Date.now();
 for (let i = 0; i < inserts; i++) {
     database.insertRow({
