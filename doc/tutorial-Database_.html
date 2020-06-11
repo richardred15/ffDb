@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      Tutorial: Database - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Braintree SDK Client Reference
+    </h3>
+
+    
+
+    <h3>Classes</h3><ul><li id="Database-nav"><a href="Database.html">Database</a><ul class='methods'><li data-type="method" id="Database-init-nav"><a href="Database.html#.init">init</a></li><li data-type="method" id="Database-rand-nav"><a href="Database.html#.rand">rand</a></li><li data-type="method" id="Database-rand_safe-nav"><a href="Database.html#.rand_safe">rand_safe</a></li><li data-type="method" id="Database-test_random-nav"><a href="Database.html#.test_random">test_random</a></li><li data-type="method" id="Database-cleanup-nav"><a href="Database.html#cleanup">cleanup</a></li><li data-type="method" id="Database-createColumn-nav"><a href="Database.html#createColumn">createColumn</a></li><li data-type="method" id="Database-createTable-nav"><a href="Database.html#createTable">createTable</a></li><li data-type="method" id="Database-deleteRows-nav"><a href="Database.html#deleteRows">deleteRows</a></li><li data-type="method" id="Database-getRows-nav"><a href="Database.html#getRows">getRows</a></li><li data-type="method" id="Database-initialize-nav"><a href="Database.html#initialize">initialize</a></li><li data-type="method" id="Database-insertRow-nav"><a href="Database.html#insertRow">insertRow</a></li><li data-type="method" id="Database-searchColumn-nav"><a href="Database.html#searchColumn">searchColumn</a></li><li data-type="method" id="Database-searchColumns-nav"><a href="Database.html#searchColumns">searchColumns</a></li><li data-type="method" id="Database-selectTable-nav"><a href="Database.html#selectTable">selectTable</a></li><li data-type="method" id="Database-tableColumns-nav"><a href="Database.html#tableColumns">tableColumns</a></li><li data-type="method" id="Database-updateRows-nav"><a href="Database.html#updateRows">updateRows</a></li></ul></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        Tutorial: Database
+      </h1>
+    
+
+    <section>
+  <header>
+    
+
+    <h2>
+      Database
+    </h2>
+  </header>
+
+  <article>
+    <h3 id="a-simple-flat-file-database">A simple flat file database</h3>
+<p>ffDb makes several assumptions about typical use cases for small size, low maintenance, easy to setup databases.</p>
+<p>All data stored is encrypted, either with a provided password or one will be generated automatically.</p>
+<pre><code>&gt; npm install <span class="hljs-comment">--save simple-ffdb</span>
+</code></pre>
+<h3 id="basic-documentation">Basic Documentation</h3>
+<p><a href="https://richard.works/projects/ffDb/doc/Database.html">Database Doc</a></p>
+<h2 id="simple-initialization">Simple Initialization</h2>
+<pre><code class="lang-javascript"><span class="hljs-keyword">let</span> Database = <span class="hljs-built_in">require</span>(<span class="hljs-string">"simple-ffdb"</span>);
+<span class="hljs-keyword">let</span> database = <span class="hljs-keyword">new</span> Database(<span class="hljs-string">"database_directory"</span>, password?);
+<span class="hljs-keyword">if</span> (!database.initialized) {
+    database.initialize() <span class="hljs-comment">/* Generate folder and file structure in indicated directory */</span>;
+}
+</code></pre>
+<h3 id="command-line-initialization">Command line initialization</h3>
+<pre><code>&gt; node
+&gt; require(<span class="hljs-string">"simple-ffdb"</span>).init(name, password?);
+&gt; .<span class="hljs-keyword">exit</span>
+</code></pre>
+<h2 id="simple-usage">Simple Usage</h2>
+<pre><code class="lang-javascript">database.createTable(<span class="hljs-string">"users"</span>, [<span class="hljs-string">"username"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"email"</span>])<span class="hljs-comment">; /* Create Table selects the created table for modification */</span>
+database.<span class="hljs-keyword">insertRow("richardred15", </span><span class="hljs-string">"testing"</span>, <span class="hljs-string">"richardred15@gmail.com"</span>)<span class="hljs-comment">;</span>
+database.<span class="hljs-keyword">inserRow("eric", </span><span class="hljs-string">"testing"</span>)<span class="hljs-comment">; /* All row values are not required */</span>
+database.<span class="hljs-keyword">insertRow(); </span><span class="hljs-comment">/* Insert an empty row */</span>
+
+
+
+database.updateRows(
+    <span class="hljs-comment">/* New Values */</span>
+    {
+<span class="hljs-symbol">        password:</span> <span class="hljs-string">"testing2"</span>
+    },
+    <span class="hljs-comment">/* Where column matches */</span>
+    {
+<span class="hljs-symbol">        username:</span> <span class="hljs-string">"richardred15"</span>
+    }
+)
+
+database.selectTable(<span class="hljs-string">"users"</span>)<span class="hljs-comment">/* Switch to table */</span><span class="hljs-comment">;</span>
+let user_data = database.searchColumn(<span class="hljs-string">"username"</span>, <span class="hljs-string">"richardred15"</span>)<span class="hljs-comment">;</span>
+</code></pre>
+<p>user_data:</p>
+<pre><code>[
+  {
+    username: <span class="hljs-symbol">'richardred15</span>',
+    password: <span class="hljs-symbol">'testing2</span>',
+    email: <span class="hljs-symbol">'richardred15@gmail.com</span>'
+  }
+]
+</code></pre>
+<pre><code class="lang-javascript"><span class="hljs-attribute">    let rows</span> = database.getRows();
+</code></pre>
+<p>rows:</p>
+<pre><code>[
+  [ <span class="hljs-symbol">'richardred15</span>', <span class="hljs-symbol">'testing2</span>', <span class="hljs-symbol">'richardred15@gmail.com</span>' ],
+  [ <span class="hljs-symbol">'eric</span>', <span class="hljs-symbol">'bill</span>', '' ]
+]
+</code></pre>
+  </article>
+</section>
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
+</body>
+</html>
