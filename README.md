@@ -72,7 +72,7 @@ let deleted = database.deleteRows({
 })
 ```
 deleted:
-```json
+```
 [
   {
     username: 'foo',
@@ -87,7 +87,7 @@ database.selectTable("users")/* Switch to table */;
 let user_data = database.searchColumn("username", "richardred15");
 ```
 user_data:
-```json
+```
 [
   {
     username: 'richardred15',
@@ -102,7 +102,7 @@ user_data:
 ```
 
 rows:
-```json
+```
 [
   [ 'richardred15', 'testing2', 'richardred15@gmail.com' ],
   [ 'eric', 'bill', '' ]
