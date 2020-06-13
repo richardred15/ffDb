@@ -16,10 +16,14 @@ class Configuration {
     load() {
         let data = fs.readFileSync(this.directory + "/conf.json");
         if (data != "{}") {
-            data = JSON.parse(data);
-            this.directory = data.directory;
-            if (Configuration.store_key) Configuration.key = data.key;
-            Configuration.algorithm = data.algorithm;
+            try {
+                data = JSON.parse(data);
+                this.directory = data.directory;
+                if (Configuration.store_key) Configuration.key = data.key;
+                Configuration.algorithm = data.algorithm;
+            } catch (e) {
+
+            }
         }
     }
 

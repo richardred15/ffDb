@@ -17,6 +17,8 @@ function assert(val, message, critical = true) {
     else pass();
 }
 
+
+
 console.log("Cleaning...");
 fs.rmdirSync("db", {
     recursive: true
@@ -24,9 +26,10 @@ fs.rmdirSync("db", {
 console.log("\n\nThe expected time values are based on my personal development system [?] and are not actual indications of failure [!]\n\n");
 
 process.stdout.write("Starting Database instance");
-let database = new Database("db", "secure", {
+let database = new Database("db", "", {
     write_synchronous: false
 });
+
 if (database) {
     pass();
     if (!database.initialized) {

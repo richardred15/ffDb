@@ -73,7 +73,7 @@
 
     
 
-    <h3>Classes</h3><ul><li id="Database-nav"><a href="Database.html">Database</a><ul class='methods'><li data-type="method" id="Database-init-nav"><a href="Database.html#.init">init</a></li><li data-type="method" id="Database-rand-nav"><a href="Database.html#.rand">rand</a></li><li data-type="method" id="Database-rand_safe-nav"><a href="Database.html#.rand_safe">rand_safe</a></li><li data-type="method" id="Database-test_random-nav"><a href="Database.html#.test_random">test_random</a></li><li data-type="method" id="Database-cleanup-nav"><a href="Database.html#cleanup">cleanup</a></li><li data-type="method" id="Database-createColumn-nav"><a href="Database.html#createColumn">createColumn</a></li><li data-type="method" id="Database-createTable-nav"><a href="Database.html#createTable">createTable</a></li><li data-type="method" id="Database-deleteRows-nav"><a href="Database.html#deleteRows">deleteRows</a></li><li data-type="method" id="Database-getRows-nav"><a href="Database.html#getRows">getRows</a></li><li data-type="method" id="Database-initialize-nav"><a href="Database.html#initialize">initialize</a></li><li data-type="method" id="Database-insertRow-nav"><a href="Database.html#insertRow">insertRow</a></li><li data-type="method" id="Database-searchColumn-nav"><a href="Database.html#searchColumn">searchColumn</a></li><li data-type="method" id="Database-searchColumns-nav"><a href="Database.html#searchColumns">searchColumns</a></li><li data-type="method" id="Database-selectTable-nav"><a href="Database.html#selectTable">selectTable</a></li><li data-type="method" id="Database-tableColumns-nav"><a href="Database.html#tableColumns">tableColumns</a></li><li data-type="method" id="Database-updateRows-nav"><a href="Database.html#updateRows">updateRows</a></li></ul></li></ul>
+    <h3>Classes</h3><ul><li id="Database-nav"><a href="Database.html">Database</a><ul class='methods'><li data-type="method" id="Database-init-nav"><a href="Database.html#.init">init</a></li><li data-type="method" id="Database-rand-nav"><a href="Database.html#.rand">rand</a></li><li data-type="method" id="Database-rand_safe-nav"><a href="Database.html#.rand_safe">rand_safe</a></li><li data-type="method" id="Database-test_random-nav"><a href="Database.html#.test_random">test_random</a></li><li data-type="method" id="Database-cleanup-nav"><a href="Database.html#cleanup">cleanup</a></li><li data-type="method" id="Database-createColumn-nav"><a href="Database.html#createColumn">createColumn</a></li><li data-type="method" id="Database-createTable-nav"><a href="Database.html#createTable">createTable</a></li><li data-type="method" id="Database-deleteRows-nav"><a href="Database.html#deleteRows">deleteRows</a></li><li data-type="method" id="Database-getRows-nav"><a href="Database.html#getRows">getRows</a></li><li data-type="method" id="Database-initialize-nav"><a href="Database.html#initialize">initialize</a></li><li data-type="method" id="Database-insertRow-nav"><a href="Database.html#insertRow">insertRow</a></li><li data-type="method" id="Database-insertRowObject-nav"><a href="Database.html#insertRowObject">insertRowObject</a></li><li data-type="method" id="Database-searchColumn-nav"><a href="Database.html#searchColumn">searchColumn</a></li><li data-type="method" id="Database-searchColumns-nav"><a href="Database.html#searchColumns">searchColumns</a></li><li data-type="method" id="Database-selectTable-nav"><a href="Database.html#selectTable">selectTable</a></li><li data-type="method" id="Database-tableColumns-nav"><a href="Database.html#tableColumns">tableColumns</a></li><li data-type="method" id="Database-updateRows-nav"><a href="Database.html#updateRows">updateRows</a></li></ul></li></ul>
   </nav>
 
   <div id="main">
@@ -252,7 +252,7 @@
           
             
     <span class="param-type">
-      any
+      object
     </span>
 
     
@@ -281,6 +281,81 @@
 
         <td class="description last">
           A set of configuration options
+          
+            <h6>Properties</h6>
+            
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+        <th>Attributes</th>
+      
+
+      
+        <th>Default</th>
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>write_synchronous</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      boolean
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+          <td class="attributes">
+            
+              &lt;optional><br>
+            
+
+            
+
+            
+          </td>
+        
+
+        
+          <td class="default">
+            
+              false
+            
+          </td>
+        
+
+        <td class="description last">
+          Whether to write to disk in a synchronous manner, set to true for important data. Maybe be defaulted to true in future.
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
           
         </td>
       </tr>
@@ -324,7 +399,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line18">line 18</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line19">line 19</a>
         </li>
       </ul>
     </dd>
@@ -560,7 +635,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line268">line 268</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line278">line 278</a>
         </li>
       </ul>
     </dd>
@@ -726,7 +801,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line278">line 278</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line288">line 288</a>
         </li>
       </ul>
     </dd>
@@ -892,7 +967,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line294">line 294</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line304">line 304</a>
         </li>
       </ul>
     </dd>
@@ -1038,7 +1113,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line309">line 309</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line319">line 319</a>
         </li>
       </ul>
     </dd>
@@ -1129,7 +1204,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line63">line 63</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line64">line 64</a>
         </li>
       </ul>
     </dd>
@@ -1336,7 +1411,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line183">line 183</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line193">line 193</a>
         </li>
       </ul>
     </dd>
@@ -1555,7 +1630,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line245">line 245</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line255">line 255</a>
         </li>
       </ul>
     </dd>
@@ -1622,7 +1697,7 @@
 
 
   <div class="description">
-    Delete row containing specified values
+    Delete row containing specified values, returns deleted rows
   </div>
 
 
@@ -1781,7 +1856,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line196">line 196</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line206">line 206</a>
         </li>
       </ul>
     </dd>
@@ -1983,7 +2058,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line231">line 231</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line241">line 241</a>
         </li>
       </ul>
     </dd>
@@ -2118,7 +2193,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line102">line 102</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line103">line 103</a>
         </li>
       </ul>
     </dd>
@@ -2225,7 +2300,7 @@
           
             
     <span class="param-type">
-      Array.&lt;any>
+      *
     </span>
 
     
@@ -2283,7 +2358,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line171">line 171</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line172">line 172</a>
         </li>
       </ul>
     </dd>
@@ -2350,6 +2425,152 @@
       
     </ul>
   
+
+
+
+      
+        
+
+
+  
+
+  <span class='name-container'>
+    <a class="link-icon" href="#insertRowObject">
+      <svg height="20" width="20" style="fill: black;">
+        <use xlink:href="#linkIcon"></use>
+      </svg>
+    </a>
+    <h4 class="name" id="insertRowObject">
+      <span class="type-signature"></span>insertRowObject<span class="signature">(object)</span><span class="type-signature"></span>
+    </h4>
+  </span>
+
+  
+
+
+
+  <div class="description">
+    Insert a row from an object with key/value pairs
+  </div>
+
+
+
+
+
+
+
+  <h5>Parameters:</h5>
+  
+
+<table class="params">
+  <thead>
+    <tr>
+      
+        <th>Name</th>
+      
+
+      <th>Type</th>
+
+      
+
+      
+
+      <th class="last">Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      <tr>
+        
+          <td class="name"><code>object</code></td>
+        
+
+        <td class="type">
+          
+            
+    <span class="param-type">
+      any
+    </span>
+
+    
+
+
+          
+        </td>
+
+        
+
+        
+
+        <td class="description last">
+          An object containing {column:value}
+          
+        </td>
+      </tr>
+
+    
+  </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+      <ul class="dummy">
+        <li>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line181">line 181</a>
+        </li>
+      </ul>
+    </dd>
+  
+
+  
+
+  
+
+  
+</dl>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2502,7 +2723,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line160">line 160</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line161">line 161</a>
         </li>
       </ul>
     </dd>
@@ -2798,7 +3019,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line147">line 147</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line148">line 148</a>
         </li>
       </ul>
     </dd>
@@ -2988,7 +3209,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line128">line 128</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line129">line 129</a>
         </li>
       </ul>
     </dd>
@@ -3123,7 +3344,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line219">line 219</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line229">line 229</a>
         </li>
       </ul>
     </dd>
@@ -3342,7 +3563,7 @@
     <dd class="tag-source">
       <ul class="dummy">
         <li>
-          <a href="database.js.html">database.js</a>, <a href="database.js.html#line208">line 208</a>
+          <a href="database.js.html">database.js</a>, <a href="database.js.html#line218">line 218</a>
         </li>
       </ul>
     </dd>

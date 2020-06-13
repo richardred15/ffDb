@@ -34,13 +34,27 @@ if (!database.initialized) {
 ## Simple Usage
 
 ```javascript
-database.createTable("users", ["username", "password", "email"]); /* Create Table selects the created table for modification */
+/* Create Table selects the created table for modification */
+database.createTable("users", ["username", "password", "email"]);
+
+/* Insert a row */
 database.insertRow("richardred15", "testing", "richardred15@gmail.com");
-database.inserRow("eric", "testing"); /* All row values are not required */
-database.insertRow(); /* Insert an empty row */
+
+/* All row values are not required */
+database.inserRow("eric", "testing"); 
+
+/* Insert with key/value pairs */
+database.insertRow({
+  username: "foo",
+  email: "baz@example.com",
+  password: "bar"
+})
+
+/* Insert an empty row */
+database.insertRow();
 
 
-
+/* Set columns in a row where column value matches */
 database.updateRows(
     /* New Values */
     {
@@ -52,11 +66,28 @@ database.updateRows(
     }
 )
 
+/* Delete a row where columns have value, returns deleted rows */
+let deleted = database.deleteRows({
+  username: "foo"
+})
+```
+deleted:
+```json
+[
+  {
+    username: 'foo',
+    password: 'bar',
+    email: 'baz@example.com'
+  }
+]
+```
+```javascript
+
 database.selectTable("users")/* Switch to table */;
 let user_data = database.searchColumn("username", "richardred15");
 ```
 user_data:
-```
+```json
 [
   {
     username: 'richardred15',
@@ -71,7 +102,7 @@ user_data:
 ```
 
 rows:
-```
+```json
 [
   [ 'richardred15', 'testing2', 'richardred15@gmail.com' ],
   [ 'eric', 'bill', '' ]

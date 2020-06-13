@@ -12,7 +12,8 @@ class Database {
      * Creates a new Database object
      * @param {string} directory - The working directory for the database
      * @param {string=} password - An optional password with which to encrypt the data
-     * @param {any=} options - A set of configuration options
+     * @param {object} [options] - A set of configuration options
+     * @param {boolean} [options.write_synchronous=false] Whether to write to disk in a synchronous manner, set to true for important data. Maybe be defaulted to true in future.
      * @constructor 
      */
     constructor(directory, password = 0, options = {}) {
@@ -50,7 +51,7 @@ class Database {
     exitHandler(database) {
         database.cleanup();
         if (arguments[1] != 0) {
-            if (arguments[2] == 'uncaughtException') console.log(arguments[1]);
+            if (arguments[2] == 'uncaughtException') console.error(arguments[1]);
             process.exit(1);
         } else {
             process.exit(0);
@@ -164,7 +165,7 @@ class Database {
 
     /**
      * Insert row containing specified values
-     * @param {any[]} arguments Insert a row from an object where {column:data}
+     * @param {*} arguments Insert a row from an object where {column:data}
      * @throws {DatabaseNotInitializedError}
      * @throws {NoSuchTableError}
      */
@@ -173,6 +174,10 @@ class Database {
         return this.table_manager.insertRow(this.current_table_name, arguments);
     }
 
+    /**
+     * Insert a row from an object with key/value pairs
+     * @param {any} object An object containing {column:value}
+     */
     insertRowObject(object) {
         if (!this.initialized) throw new Errors.DatabaseNotInitializedError();
         return this.table_manager.insertRowObject(this.current_table_name, object);
@@ -191,7 +196,7 @@ class Database {
     }
 
     /**
-     * Delete row containing specified values
+     * Delete row containing specified values, returns deleted rows
      * @param {object} where An object defining search criteria {column:term}
      * @param {number} [limit=Infinity] Limit the number of deleted rows
      * @returns {object[]} Deleted rows
