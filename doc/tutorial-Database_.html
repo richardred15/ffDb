@@ -113,13 +113,27 @@
 &gt; .<span class="hljs-keyword">exit</span>
 </code></pre>
 <h2 id="simple-usage">Simple Usage</h2>
-<pre><code class="lang-javascript">database.createTable(<span class="hljs-string">"users"</span>, [<span class="hljs-string">"username"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"email"</span>])<span class="hljs-comment">; /* Create Table selects the created table for modification */</span>
-database.<span class="hljs-keyword">insertRow("richardred15", </span><span class="hljs-string">"testing"</span>, <span class="hljs-string">"richardred15@gmail.com"</span>)<span class="hljs-comment">;</span>
-database.<span class="hljs-keyword">inserRow("eric", </span><span class="hljs-string">"testing"</span>)<span class="hljs-comment">; /* All row values are not required */</span>
-database.<span class="hljs-keyword">insertRow(); </span><span class="hljs-comment">/* Insert an empty row */</span>
+<pre><code class="lang-javascript"><span class="hljs-comment">/* Create Table selects the created table for modification */</span>
+database.createTable(<span class="hljs-string">"users"</span>, [<span class="hljs-string">"username"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"email"</span>]);
+
+<span class="hljs-comment">/* Insert a row */</span>
+database.insertRow(<span class="hljs-string">"richardred15"</span>, <span class="hljs-string">"testing"</span>, <span class="hljs-string">"richardred15@gmail.com"</span>);
+
+<span class="hljs-comment">/* All row values are not required */</span>
+database.inserRow(<span class="hljs-string">"eric"</span>, <span class="hljs-string">"testing"</span>); 
+
+<span class="hljs-comment">/* Insert with key/value pairs */</span>
+database.insertRow({
+<span class="hljs-symbol">  username:</span> <span class="hljs-string">"foo"</span>,
+<span class="hljs-symbol">  email:</span> <span class="hljs-string">"baz@example.com"</span>,
+<span class="hljs-symbol">  password:</span> <span class="hljs-string">"bar"</span>
+})
+
+<span class="hljs-comment">/* Insert an empty row */</span>
+database.insertRow();
 
 
-
+<span class="hljs-comment">/* Set columns in a row where column value matches */</span>
 database.updateRows(
     <span class="hljs-comment">/* New Values */</span>
     {
@@ -131,6 +145,21 @@ database.updateRows(
     }
 )
 
+<span class="hljs-comment">/* Delete a row where columns have value, returns deleted rows */</span>
+let deleted = database.deleteRows({
+<span class="hljs-symbol">  username:</span> <span class="hljs-string">"foo"</span>
+})
+</code></pre>
+<p>deleted:</p>
+<pre><code>[
+  {
+    username: <span class="hljs-symbol">'foo</span>',
+    password: <span class="hljs-symbol">'bar</span>',
+    email: <span class="hljs-symbol">'baz@example.com</span>'
+  }
+]
+</code></pre>
+<pre><code class="lang-javascript">
 database.selectTable(<span class="hljs-string">"users"</span>)<span class="hljs-comment">/* Switch to table */</span><span class="hljs-comment">;</span>
 let user_data = database.searchColumn(<span class="hljs-string">"username"</span>, <span class="hljs-string">"richardred15"</span>)<span class="hljs-comment">;</span>
 </code></pre>

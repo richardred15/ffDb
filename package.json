@@ -1,6 +1,6 @@
 {
   "name": "simple-ffdb",
-  "version": "0.1.24",
+  "version": "0.1.26",
   "description": "Flat file database",
   "main": "src/database.js",
   "engineStrict": true,

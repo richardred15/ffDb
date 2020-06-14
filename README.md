@@ -26,7 +26,7 @@ if (!database.initialized) {
 ### Command line initialization
 
 ```
-> node
+$ node
 > require("simple-ffdb").init(name, password?);
 > .exit
 ```
@@ -38,10 +38,10 @@ if (!database.initialized) {
 database.createTable("users", ["username", "password", "email"]);
 
 /* Insert a row */
-database.insertRow("richardred15", "testing", "richardred15@gmail.com");
+database.insertRow("richardred15", "password", "richardred15@gmail.com");
 
 /* All row values are not required */
-database.inserRow("eric", "testing"); 
+database.inserRow("eric", "password"); 
 
 /* Insert with key/value pairs */
 database.insertRow({
@@ -58,7 +58,7 @@ database.insertRow();
 database.updateRows(
     /* New Values */
     {
-        password: "testing2"
+        password: "new_password"
     },
     /* Where column matches */
     {
@@ -91,7 +91,7 @@ user_data:
 [
   {
     username: 'richardred15',
-    password: 'testing2',
+    password: 'new_password',
     email: 'richardred15@gmail.com'
   }
 ]
@@ -104,7 +104,8 @@ user_data:
 rows:
 ```
 [
-  [ 'richardred15', 'testing2', 'richardred15@gmail.com' ],
-  [ 'eric', 'bill', '' ]
+  [ 'richardred15', 'new_password', 'richardred15@gmail.com' ],
+  [ 'eric', 'password', '' ],
+  [ '', '', '' ]
 ]
 ```
